@@ -9,17 +9,18 @@ While  I have many years of experience as a software engineer, my experience wit
 
 ## Table of Contents
 1. Installing
-2. Running
-3. Building a Basic Agent
-  1. Creating an Agent
-  2. Controlling an SCV
-  3. Controlling the Barracks
-  4. Controlling your Army
-4. Advanced Controls
-  1. Camera and Mini Map
-  2. Selections
-  3. Control Groups
-  4. Moving Units
-  5. Unit Actions
-  6. Building Actions
-5. Reading Replays
+1. Running
+1. Building a Basic Agent
+   1. Creating an Agent
+   1. Controlling an SCV
+   1. Controlling the Barracks
+   1. Controlling your Army
+1. Game Controls
+   1. General Game Information
+   1. Camera and Mini Map
+   1. Selections
+   1. Building Actions
+   1. Control Groups
+   1. Moving Units
+   1. Unit Actions
+1. Reading Replays
