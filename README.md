@@ -10,7 +10,7 @@ While  I have many years of experience as a software engineer, my experience wit
 ## Table of Contents
 1. Installing
 1. Running
-1. Building a Basic Agent
+1. [Building a Basic Agent](https://medium.com/@skjb/building-a-basic-pysc2-agent-b109cde1477c)
    1. Creating an Agent
    1. Controlling an SCV
    1. Controlling the Barracks
