@@ -35,6 +35,8 @@ ACTION_BUILD_SUPPLY_DEPOT = 'buildsupplydepot'
 ACTION_BUILD_BARRACKS = 'buildbarracks'
 ACTION_SELECT_BARRACKS = 'selectbarracks'
 ACTION_BUILD_MARINE = 'buildmarine'
+ACTION_SELECT_ARMY = 'selectarmy'
+ACTION_ATTACK = 'attack'
 
 smart_actions = [
     ACTION_DO_NOTHING,
@@ -43,6 +45,8 @@ smart_actions = [
     ACTION_BUILD_BARRACKS,
     ACTION_SELECT_BARRACKS,
     ACTION_BUILD_MARINE,
+    ACTION_SELECT_ARMY,
+    ACTION_ATTACK,
 ]
 
 # Stolen from https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow
@@ -89,7 +93,7 @@ class QLearningTable:
 class SmartAgent(base_agent.BaseAgent):
     def __init__(self):
         self.qlearn = QLearningTable(actions=list(range(len(smart_actions))))
-        
+    
     def transformLocation(self, x, x_distance, y, y_distance):
         if not self.base_top_left:
             return [x - x_distance, y - y_distance]
@@ -149,5 +153,16 @@ class SmartAgent(base_agent.BaseAgent):
         elif smart_action == ACTION_BUILD_MARINE:
             if _TRAIN_MARINE in obs.observation['available_actions']:
                 return actions.FunctionCall(_TRAIN_MARINE, [[1]])
+        
+        elif smart_action == ACTION_SELECT_ARMY:
+            if _SELECT_ARMY in obs.observation['available_actions']:
+                return actions.FunctionCall(_SELECT_ARMY, [[0]])
+        
+        elif smart_action == ACTION_ATTACK:
+            if _ATTACK_MINIMAP in obs.observation["available_actions"]:
+                if self.base_top_left:
+                    return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [39, 45]])
             
+                return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [21, 24]])
+        
         return actions.FunctionCall(_NO_OP, [])
