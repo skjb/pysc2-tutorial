@@ -94,7 +94,10 @@ class SmartAgent(base_agent.BaseAgent):
         
     def step(self, obs):
         super(SmartAgent, self).step(obs)
-            
+        
+        player_y, player_x = (obs.observation['minimap'][_PLAYER_RELATIVE] == _PLAYER_SELF).nonzero()
+        self.base_top_left = 1 if player_y.any() and player_y.mean() <= 31 else 0
+        
         smart_action = smart_actions[random.randrange(0, len(smart_actions) - 1)]
         
         if smart_action == ACTION_DO_NOTHING:
