@@ -126,6 +126,9 @@ class SmartAgent(base_agent.BaseAgent):
             army_supply,
         ]
         
+        killed_unit_score = obs.observation['score_cumulative'][5]
+        killed_building_score = obs.observation['score_cumulative'][6]
+        
         reward = 0
             
         if killed_unit_score > self.previous_killed_unit_score:
