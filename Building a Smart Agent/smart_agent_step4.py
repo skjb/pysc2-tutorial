@@ -137,7 +137,7 @@ class SmartAgent(base_agent.BaseAgent):
         if killed_building_score > self.previous_killed_building_score:
             reward += KILL_BUILDING_REWARD
                 
-        smart_action = self.qlearn.choose_action(str(current_state))
+        smart_action = smart_actions[self.qlearn.choose_action(str(current_state))]
         
         if smart_action == ACTION_DO_NOTHING:
             return actions.FunctionCall(_NO_OP, [])
