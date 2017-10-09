@@ -118,7 +118,6 @@ class SmartAgent(base_agent.BaseAgent):
         army_supply = obs.observation['player'][5]
         
         current_state = [
-            self.base_top_left,
             supply_depot_count,
             barracks_count,
             supply_limit,
