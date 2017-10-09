@@ -1,7 +1,7 @@
-# How To: pysc2
+# How To: PySC2
 
 ## Preface
-As I explore pysc2 I'm going to document my experiences here in the form of tutorials so you can follow along and build a StarCraft II bot of your own.
+As I explore PySC2 I'm going to document my experiences here in the form of tutorials so you can follow along and build a StarCraft II bot of your own.
 
 In order to keep things simple I will restrict the bot's race to Terran, at least for the first draft. I may expand on the tutorial if it becomes financially viable to do so.
 
