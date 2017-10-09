@@ -86,6 +86,9 @@ class QLearningTable:
             self.q_table = self.q_table.append(pd.Series([0] * len(self.actions), index=self.q_table.columns, name=state))
 
 class SmartAgent(base_agent.BaseAgent):
+    def __init__(self):
+        self.qlearn = QLearningTable(actions=list(range(len(smart_actions))))
+        
     def transformLocation(self, x, x_distance, y, y_distance):
         if not self.base_top_left:
             return [x - x_distance, y - y_distance]
