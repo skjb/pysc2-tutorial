@@ -120,7 +120,7 @@ class SmartAgent(base_agent.BaseAgent):
             army_supply,
         ]
         
-        smart_action = self.qlearn.choose_action(str(current_state))
+        smart_action = smart_actions[self.qlearn.choose_action(str(current_state))]
         
         if smart_action == ACTION_DO_NOTHING:
             return actions.FunctionCall(_NO_OP, [])
