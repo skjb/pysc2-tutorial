@@ -35,6 +35,8 @@ ACTION_BUILD_SUPPLY_DEPOT = 'buildsupplydepot'
 ACTION_BUILD_BARRACKS = 'buildbarracks'
 ACTION_SELECT_BARRACKS = 'selectbarracks'
 ACTION_BUILD_MARINE = 'buildmarine'
+ACTION_SELECT_ARMY = 'selectarmy'
+ACTION_ATTACK = 'attack'
 
 smart_actions = [
     ACTION_DO_NOTHING,
@@ -43,6 +45,8 @@ smart_actions = [
     ACTION_BUILD_BARRACKS,
     ACTION_SELECT_BARRACKS,
     ACTION_BUILD_MARINE,
+    ACTION_SELECT_ARMY,
+    ACTION_ATTACK,
 ]
 
 KILL_UNIT_REWARD = 0.2
@@ -119,6 +123,9 @@ class SmartAgent(base_agent.BaseAgent):
         supply_limit = obs.observation['player'][4]
         army_supply = obs.observation['player'][5]
         
+        killed_unit_score = obs.observation['score_cumulative'][5]
+        killed_building_score = obs.observation['score_cumulative'][6]
+        
         current_state = [
             self.base_top_left,
             supply_depot_count,
@@ -126,9 +133,6 @@ class SmartAgent(base_agent.BaseAgent):
             supply_limit,
             army_supply,
         ]
-        
-        killed_unit_score = obs.observation['score_cumulative'][5]
-        killed_building_score = obs.observation['score_cumulative'][6]
         
         reward = 0
             
@@ -138,7 +142,11 @@ class SmartAgent(base_agent.BaseAgent):
         if killed_building_score > self.previous_killed_building_score:
             reward += KILL_BUILDING_REWARD
                 
-        smart_action = smart_actions[self.qlearn.choose_action(str(current_state))]
+        rl_action = self.qlearn.choose_action(str(current_state))
+        smart_action = smart_actions[rl_action]
+        
+        self.previous_killed_unit_score = killed_unit_score
+        self.previous_killed_building_score = killed_building_score
         
         if smart_action == ACTION_DO_NOTHING:
             return actions.FunctionCall(_NO_OP, [])
@@ -185,5 +193,16 @@ class SmartAgent(base_agent.BaseAgent):
         elif smart_action == ACTION_BUILD_MARINE:
             if _TRAIN_MARINE in obs.observation['available_actions']:
                 return actions.FunctionCall(_TRAIN_MARINE, [[1]])
+        
+        elif smart_action == ACTION_SELECT_ARMY:
+            if _SELECT_ARMY in obs.observation['available_actions']:
+                return actions.FunctionCall(_SELECT_ARMY, [[0]])
+        
+        elif smart_action == ACTION_ATTACK:
+            if _ATTACK_MINIMAP in obs.observation["available_actions"]:
+                if self.base_top_left:
+                    return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [39, 45]])
             
+                return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [21, 24]])
+        
         return actions.FunctionCall(_NO_OP, [])
