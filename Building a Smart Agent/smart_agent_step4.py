@@ -127,7 +127,6 @@ class SmartAgent(base_agent.BaseAgent):
         killed_building_score = obs.observation['score_cumulative'][6]
         
         current_state = [
-            self.base_top_left,
             supply_depot_count,
             barracks_count,
             supply_limit,
