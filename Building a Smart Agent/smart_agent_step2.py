@@ -116,7 +116,7 @@ class SmartAgent(base_agent.BaseAgent):
             unit_y, unit_x = (unit_type == _TERRAN_SCV).nonzero()
                 
             if unit_y.any():
-                i = random.randrange(0, len(unit_y) - 1)
+                i = random.randint(0, len(unit_y) - 1)
                 target = [unit_x[i], unit_y[i]]
                 
                 return actions.FunctionCall(_SELECT_POINT, [_SCREEN, target])
