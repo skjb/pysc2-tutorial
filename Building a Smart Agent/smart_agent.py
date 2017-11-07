@@ -95,6 +95,7 @@ class QLearningTable:
 
 class SmartAgent(base_agent.BaseAgent):
     def __init__(self):
+        super(SmartAgent, self).__init__()
         self.qlearn = QLearningTable(actions=list(range(len(smart_actions))))
         
         self.previous_killed_unit_score = 0
