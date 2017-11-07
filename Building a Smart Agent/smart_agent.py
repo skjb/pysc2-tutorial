@@ -71,7 +71,7 @@ class QLearningTable:
             # some actions have the same value
             state_action = state_action.reindex(np.random.permutation(state_action.index))
             
-            action = state_action.argmax()
+            action = state_action.values.argmax()
         else:
             # choose random action
             action = np.random.choice(self.actions)
