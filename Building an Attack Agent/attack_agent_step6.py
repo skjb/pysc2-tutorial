@@ -100,7 +100,7 @@ class AttackAgent(base_agent.BaseAgent):
     def __init__(self):
         super(AttackAgent, self).__init__()
         
-        self.qlearn = QLearningTable(actions=list(range(len(smart_actions))), e_greedy=0.1)
+        self.qlearn = QLearningTable(actions=list(range(len(smart_actions))))
         
         self.previous_killed_unit_score = 0
         self.previous_killed_building_score = 0
