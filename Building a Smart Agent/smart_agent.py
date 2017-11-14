@@ -71,7 +71,7 @@ class QLearningTable:
             # some actions have the same value
             state_action = state_action.reindex(np.random.permutation(state_action.index))
             
-            action = state_action.argmax()
+            action = state_action.values.argmax()
         else:
             # choose random action
             action = np.random.choice(self.actions)
@@ -95,6 +95,7 @@ class QLearningTable:
 
 class SmartAgent(base_agent.BaseAgent):
     def __init__(self):
+        super(SmartAgent, self).__init__()
         self.qlearn = QLearningTable(actions=list(range(len(smart_actions))))
         
         self.previous_killed_unit_score = 0
