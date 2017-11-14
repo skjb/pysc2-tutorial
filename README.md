@@ -10,3 +10,4 @@ While  I have many years of experience as a software engineer, my experience wit
 ## Table of Contents
 1. [Building a Basic Agent](https://medium.com/@skjb/building-a-basic-pysc2-agent-b109cde1477c)
 1. [Building a Simple Reinforcement Learning Agent](https://medium.com/@skjb/building-a-smart-pysc2-agent-cdc269cb095d)
+1. [Add Smart Attacking to Your Agent](https://medium.com/@skjb/add-smart-attacking-to-your-pysc2-agent-17fd5caad578)
