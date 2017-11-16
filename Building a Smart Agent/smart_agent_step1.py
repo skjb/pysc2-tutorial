@@ -28,6 +28,7 @@ _TERRAN_SUPPLY_DEPOT = 19
 _TERRAN_BARRACKS = 21
 
 _NOT_QUEUED = [0]
+_QUEUED = [1]
 
 # Stolen from https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow
 class QLearningTable:

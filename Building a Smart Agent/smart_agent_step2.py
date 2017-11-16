@@ -28,6 +28,7 @@ _TERRAN_SUPPLY_DEPOT = 19
 _TERRAN_BARRACKS = 21
 
 _NOT_QUEUED = [0]
+_QUEUED = [1]
 
 ACTION_DO_NOTHING = 'donothing'
 ACTION_SELECT_SCV = 'selectscv'
@@ -92,6 +93,8 @@ class QLearningTable:
 
 class SmartAgent(base_agent.BaseAgent):
     def __init__(self):
+        super(SmartAgent, self).__init__()
+        
         self.qlearn = QLearningTable(actions=list(range(len(smart_actions))))
     
     def transformLocation(self, x, x_distance, y, y_distance):
@@ -152,17 +155,17 @@ class SmartAgent(base_agent.BaseAgent):
         
         elif smart_action == ACTION_BUILD_MARINE:
             if _TRAIN_MARINE in obs.observation['available_actions']:
-                return actions.FunctionCall(_TRAIN_MARINE, [[1]])
+                return actions.FunctionCall(_TRAIN_MARINE, [_QUEUED])
         
         elif smart_action == ACTION_SELECT_ARMY:
             if _SELECT_ARMY in obs.observation['available_actions']:
-                return actions.FunctionCall(_SELECT_ARMY, [[0]])
+                return actions.FunctionCall(_SELECT_ARMY, [_NOT_QUEUED])
         
         elif smart_action == ACTION_ATTACK:
             if _ATTACK_MINIMAP in obs.observation["available_actions"]:
                 if self.base_top_left:
-                    return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [39, 45]])
+                    return actions.FunctionCall(_ATTACK_MINIMAP, [_NOT_QUEUED, [39, 45]])
             
-                return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [21, 24]])
+                return actions.FunctionCall(_ATTACK_MINIMAP, [_NOT_QUEUED, [21, 24]])
         
         return actions.FunctionCall(_NO_OP, [])
