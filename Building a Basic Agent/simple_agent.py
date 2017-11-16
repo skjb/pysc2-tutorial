@@ -28,7 +28,7 @@ _TERRAN_SCV = 45
 _PLAYER_SELF = 1
 _SUPPLY_USED = 3
 _SUPPLY_MAX = 4
-_SCREEN = [0]
+_NOT_QUEUED = [0]
 _MINIMAP = [1]
 _QUEUED = [1]
 _NOADD = [0]
@@ -67,7 +67,7 @@ class SimpleAgent(base_agent.BaseAgent):
                 
                 self.scv_selected = True
                 
-                return actions.FunctionCall(_SELECT_POINT, [_SCREEN, target])
+                return actions.FunctionCall(_SELECT_POINT, [_NOT_QUEUED, target])
             elif _BUILD_SUPPLYDEPOT in obs.observation["available_actions"]:
                 unit_type = obs.observation["screen"][_UNIT_TYPE]
                 unit_y, unit_x = (unit_type == _TERRAN_COMMANDCENTER).nonzero()
@@ -76,7 +76,7 @@ class SimpleAgent(base_agent.BaseAgent):
                 
                 self.supply_depot_built = True
                 
-                return actions.FunctionCall(_BUILD_SUPPLYDEPOT, [_SCREEN, target])
+                return actions.FunctionCall(_BUILD_SUPPLYDEPOT, [_NOT_QUEUED, target])
         elif not self.barracks_built:
             if _BUILD_BARRACKS in obs.observation["available_actions"]:
                 unit_type = obs.observation["screen"][_UNIT_TYPE]
@@ -86,7 +86,7 @@ class SimpleAgent(base_agent.BaseAgent):
                 
                 self.barracks_built = True
                 
-                return actions.FunctionCall(_BUILD_BARRACKS, [_SCREEN, target])
+                return actions.FunctionCall(_BUILD_BARRACKS, [_NOT_QUEUED, target])
         elif not self.barracks_rallied:
             if not self.barracks_selected:
                 unit_type = obs.observation["screen"][_UNIT_TYPE]
@@ -97,7 +97,7 @@ class SimpleAgent(base_agent.BaseAgent):
                 
                     self.barracks_selected = True
                 
-                    return actions.FunctionCall(_SELECT_POINT, [_SCREEN, target])
+                    return actions.FunctionCall(_SELECT_POINT, [_NOT_QUEUED, target])
             else:
                 self.barracks_rallied = True
                 

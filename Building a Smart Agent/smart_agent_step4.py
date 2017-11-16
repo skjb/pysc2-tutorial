@@ -27,7 +27,7 @@ _TERRAN_SCV = 45
 _TERRAN_SUPPLY_DEPOT = 19
 _TERRAN_BARRACKS = 21
 
-_SCREEN = [0]
+_NOT_QUEUED = [0]
 
 ACTION_DO_NOTHING = 'donothing'
 ACTION_SELECT_SCV = 'selectscv'
@@ -158,7 +158,7 @@ class SmartAgent(base_agent.BaseAgent):
                 i = random.randint(0, len(unit_y) - 1)
                 target = [unit_x[i], unit_y[i]]
                 
-                return actions.FunctionCall(_SELECT_POINT, [_SCREEN, target])
+                return actions.FunctionCall(_SELECT_POINT, [_NOT_QUEUED, target])
         
         elif smart_action == ACTION_BUILD_SUPPLY_DEPOT:
             if _BUILD_SUPPLY_DEPOT in obs.observation['available_actions']:
@@ -168,7 +168,7 @@ class SmartAgent(base_agent.BaseAgent):
                 if unit_y.any():
                     target = self.transformLocation(int(unit_x.mean()), 0, int(unit_y.mean()), 20)
                 
-                    return actions.FunctionCall(_BUILD_SUPPLY_DEPOT, [_SCREEN, target])
+                    return actions.FunctionCall(_BUILD_SUPPLY_DEPOT, [_NOT_QUEUED, target])
         
         elif smart_action == ACTION_BUILD_BARRACKS:
             if _BUILD_BARRACKS in obs.observation['available_actions']:
@@ -178,7 +178,7 @@ class SmartAgent(base_agent.BaseAgent):
                 if unit_y.any():
                     target = self.transformLocation(int(unit_x.mean()), 20, int(unit_y.mean()), 0)
             
-                    return actions.FunctionCall(_BUILD_BARRACKS, [_SCREEN, target])
+                    return actions.FunctionCall(_BUILD_BARRACKS, [_NOT_QUEUED, target])
     
         elif smart_action == ACTION_SELECT_BARRACKS:
             unit_type = obs.observation['screen'][_UNIT_TYPE]
@@ -187,7 +187,7 @@ class SmartAgent(base_agent.BaseAgent):
             if unit_y.any():
                 target = [int(unit_x.mean()), int(unit_y.mean())]
         
-                return actions.FunctionCall(_SELECT_POINT, [_SCREEN, target])
+                return actions.FunctionCall(_SELECT_POINT, [_NOT_QUEUED, target])
         
         elif smart_action == ACTION_BUILD_MARINE:
             if _TRAIN_MARINE in obs.observation['available_actions']:
