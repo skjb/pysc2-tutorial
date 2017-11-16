@@ -28,6 +28,9 @@ _TERRAN_SCV = 45
 _TERRAN_SUPPLY_DEPOT = 19
 _TERRAN_BARRACKS = 21
 
+_NOT_QUEUED = [0]
+_QUEUED = [1]
+
 ACTION_DO_NOTHING = 'donothing'
 ACTION_SELECT_SCV = 'selectscv'
 ACTION_BUILD_SUPPLY_DEPOT = 'buildsupplydepot'
@@ -172,7 +175,7 @@ class AttackAgent(base_agent.BaseAgent):
                 i = random.randint(0, len(unit_y) - 1)
                 target = [unit_x[i], unit_y[i]]
                 
-                return actions.FunctionCall(_SELECT_POINT, [[0], target])
+                return actions.FunctionCall(_SELECT_POINT, [_NOT_QUEUED, target])
         
         elif smart_action == ACTION_BUILD_SUPPLY_DEPOT:
             if _BUILD_SUPPLY_DEPOT in obs.observation['available_actions']:
@@ -182,7 +185,7 @@ class AttackAgent(base_agent.BaseAgent):
                 if unit_y.any():
                     target = self.transformDistance(int(unit_x.mean()), 0, int(unit_y.mean()), 20)
                 
-                    return actions.FunctionCall(_BUILD_SUPPLY_DEPOT, [[0], target])
+                    return actions.FunctionCall(_BUILD_SUPPLY_DEPOT, [_NOT_QUEUED, target])
         
         elif smart_action == ACTION_BUILD_BARRACKS:
             if _BUILD_BARRACKS in obs.observation['available_actions']:
@@ -192,7 +195,7 @@ class AttackAgent(base_agent.BaseAgent):
                 if unit_y.any():
                     target = self.transformDistance(int(unit_x.mean()), 20, int(unit_y.mean()), 0)
             
-                    return actions.FunctionCall(_BUILD_BARRACKS, [[0], target])
+                    return actions.FunctionCall(_BUILD_BARRACKS, [_NOT_QUEUED, target])
     
         elif smart_action == ACTION_SELECT_BARRACKS:
             unit_type = obs.observation['screen'][_UNIT_TYPE]
@@ -201,21 +204,21 @@ class AttackAgent(base_agent.BaseAgent):
             if unit_y.any():
                 target = [int(unit_x.mean()), int(unit_y.mean())]
         
-                return actions.FunctionCall(_SELECT_POINT, [[0], target])
+                return actions.FunctionCall(_SELECT_POINT, [_NOT_QUEUED, target])
         
         elif smart_action == ACTION_BUILD_MARINE:
             if _TRAIN_MARINE in obs.observation['available_actions']:
-                return actions.FunctionCall(_TRAIN_MARINE, [[1]])
+                return actions.FunctionCall(_TRAIN_MARINE, [_QUEUED])
         
         elif smart_action == ACTION_SELECT_ARMY:
             if _SELECT_ARMY in obs.observation['available_actions']:
-                return actions.FunctionCall(_SELECT_ARMY, [[0]])
+                return actions.FunctionCall(_SELECT_ARMY, [_NOT_QUEUED])
         
         elif smart_action == ACTION_ATTACK:
             if _ATTACK_MINIMAP in obs.observation["available_actions"]:
                 if self.base_top_left:
-                    return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [39, 45]])
+                    return actions.FunctionCall(_ATTACK_MINIMAP, [_NOT_QUEUED, [39, 45]])
             
-                return actions.FunctionCall(_ATTACK_MINIMAP, [[1], [21, 24]])
+                return actions.FunctionCall(_ATTACK_MINIMAP, [_NOT_QUEUED, [21, 24]])
         
         return actions.FunctionCall(_NO_OP, [])
