@@ -22,6 +22,7 @@ _TERRAN_SCV = 45
 # Parameters
 _PLAYER_SELF = 1
 _NOT_QUEUED = [0]
+_QUEUED = [1]
 
 class SimpleAgent(base_agent.BaseAgent):
     base_top_left = None

@@ -27,7 +27,6 @@ _PLAYER_SELF = 1
 _SUPPLY_USED = 3
 _SUPPLY_MAX = 4
 _NOT_QUEUED = [0]
-_MINIMAP = [1]
 _QUEUED = [1]
 
 class SimpleAgent(base_agent.BaseAgent):
@@ -97,9 +96,9 @@ class SimpleAgent(base_agent.BaseAgent):
                 self.barracks_rallied = True
                 
                 if self.base_top_left:
-                    return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_MINIMAP, [29, 21]])
+                    return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_NOT_QUEUED, [29, 21]])
                 
-                return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_MINIMAP, [29, 46]])
+                return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_NOT_QUEUED, [29, 46]])
         elif obs.observation["player"][_SUPPLY_USED] < obs.observation["player"][_SUPPLY_MAX] and _TRAIN_MARINE in obs.observation["available_actions"]:
             return actions.FunctionCall(_TRAIN_MARINE, [_QUEUED])
 

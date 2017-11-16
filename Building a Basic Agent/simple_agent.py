@@ -29,9 +29,7 @@ _PLAYER_SELF = 1
 _SUPPLY_USED = 3
 _SUPPLY_MAX = 4
 _NOT_QUEUED = [0]
-_MINIMAP = [1]
 _QUEUED = [1]
-_NOADD = [0]
 
 class SimpleAgent(base_agent.BaseAgent):
     base_top_left = None
@@ -102,9 +100,9 @@ class SimpleAgent(base_agent.BaseAgent):
                 self.barracks_rallied = True
                 
                 if self.base_top_left:
-                    return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_MINIMAP, [29, 21]])
+                    return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_NOT_QUEUED, [29, 21]])
                 
-                return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_MINIMAP, [29, 46]])
+                return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_NOT_QUEUED, [29, 46]])
         elif obs.observation["player"][_SUPPLY_USED] < obs.observation["player"][_SUPPLY_MAX] and _TRAIN_MARINE in obs.observation["available_actions"]:
             return actions.FunctionCall(_TRAIN_MARINE, [_QUEUED])
         elif not self.army_rallied:
@@ -113,14 +111,14 @@ class SimpleAgent(base_agent.BaseAgent):
                     self.army_selected = True
                     self.barracks_selected = False
                 
-                    return actions.FunctionCall(_SELECT_ARMY, [_NOADD])
+                    return actions.FunctionCall(_SELECT_ARMY, [_NOT_QUEUED])
             elif _ATTACK_MINIMAP in obs.observation["available_actions"]:
                 self.army_rallied = True
                 self.army_selected = False
             
                 if self.base_top_left:
-                    return actions.FunctionCall(_ATTACK_MINIMAP, [_MINIMAP, [39, 45]])
+                    return actions.FunctionCall(_ATTACK_MINIMAP, [_NOT_QUEUED, [39, 45]])
             
-                return actions.FunctionCall(_ATTACK_MINIMAP, [_MINIMAP, [21, 24]])
+                return actions.FunctionCall(_ATTACK_MINIMAP, [_NOT_QUEUED, [21, 24]])
 
         return actions.FunctionCall(_NOOP, [])
