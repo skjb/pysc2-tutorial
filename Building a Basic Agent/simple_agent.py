@@ -103,8 +103,9 @@ class SimpleAgent(base_agent.BaseAgent):
                     return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_NOT_QUEUED, [29, 21]])
                 
                 return actions.FunctionCall(_RALLY_UNITS_MINIMAP, [_NOT_QUEUED, [29, 46]])
-        elif obs.observation["player"][_SUPPLY_USED] < obs.observation["player"][_SUPPLY_MAX] and _TRAIN_MARINE in obs.observation["available_actions"]:
-            return actions.FunctionCall(_TRAIN_MARINE, [_QUEUED])
+        elif obs.observation["player"][_SUPPLY_USED] < obs.observation["player"][_SUPPLY_MAX]:
+            if _TRAIN_MARINE in obs.observation["available_actions"]:
+                return actions.FunctionCall(_TRAIN_MARINE, [_QUEUED])
         elif not self.army_rallied:
             if not self.army_selected:
                 if _SELECT_ARMY in obs.observation["available_actions"]:
