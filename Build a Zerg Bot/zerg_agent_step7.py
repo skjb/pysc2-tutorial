@@ -49,7 +49,7 @@ class ZergAgent(base_agent.BaseAgent):
 
     if self.unit_type_is_selected(obs, units.Zerg.Zergling):
       if self.can_do(obs, actions.FUNCTIONS.Attack_minimap.id):
-        return actions.FUNCTIONS.Attack_minimap('now',
+        return actions.FUNCTIONS.Attack_minimap("now",
                                                 self.attack_coordinates)
 
     spawning_pools = self.get_units_by_type(obs, units.Zerg.SpawningPool)
