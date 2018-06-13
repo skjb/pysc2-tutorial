@@ -43,7 +43,7 @@ class ZergAgent(base_agent.BaseAgent):
         self.attack_coordinates = (12, 16)
 
     zerglings = self.get_units_by_type(obs, units.Zerg.Zergling)
-    if len(zerglings) > 10:
+    if len(zerglings) >= 10:
       if self.unit_type_is_selected(obs, units.Zerg.Zergling):
         if self.can_do(obs, actions.FUNCTIONS.Attack_minimap.id):
           return actions.FUNCTIONS.Attack_minimap("now",
