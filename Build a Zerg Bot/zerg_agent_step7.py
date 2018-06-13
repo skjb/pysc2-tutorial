@@ -44,13 +44,13 @@ class ZergAgent(base_agent.BaseAgent):
 
     zerglings = self.get_units_by_type(obs, units.Zerg.Zergling)
     if len(zerglings) > 10:
+      if self.unit_type_is_selected(obs, units.Zerg.Zergling):
+        if self.can_do(obs, actions.FUNCTIONS.Attack_minimap.id):
+          return actions.FUNCTIONS.Attack_minimap("now",
+                                                  self.attack_coordinates)
+
       if self.can_do(obs, actions.FUNCTIONS.select_army.id):
         return actions.FUNCTIONS.select_army("select")
-
-    if self.unit_type_is_selected(obs, units.Zerg.Zergling):
-      if self.can_do(obs, actions.FUNCTIONS.Attack_minimap.id):
-        return actions.FUNCTIONS.Attack_minimap("now",
-                                                self.attack_coordinates)
 
     spawning_pools = self.get_units_by_type(obs, units.Zerg.SpawningPool)
     if len(spawning_pools) == 0:
