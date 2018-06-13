@@ -73,7 +73,7 @@ class ZergAgent(base_agent.BaseAgent):
                      obs.observation.player.food_used)
       if free_supply == 0:
         if self.can_do(obs, actions.FUNCTIONS.Train_Overlord_quick.id):
-          return actions.FUNCTIONS.Train_Overlord_quick('now')
+          return actions.FUNCTIONS.Train_Overlord_quick("now")
 
       if self.can_do(obs, actions.FUNCTIONS.Train_Zergling_quick.id):
         return actions.FUNCTIONS.Train_Zergling_quick("now")
