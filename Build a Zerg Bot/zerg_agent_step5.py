@@ -45,7 +45,7 @@ class ZergAgent(base_agent.BaseAgent):
           obs.observation.available_actions):
         return actions.FUNCTIONS.Train_Zergling_quick("now")
     
-    larvae = self.get_units_by_type(units.Zerg.Larva)
+    larvae = self.get_units_by_type(oba, units.Zerg.Larva)
     if len(larvae) > 0:
       larva = random.choice(larvae)
       
