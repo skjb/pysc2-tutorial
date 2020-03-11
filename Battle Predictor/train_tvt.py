@@ -3,8 +3,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-xs = []
-ys = []
+inputs = []
+labels = []
  
 with open("tvt.csv") as csvfile:
   csvreader = csv.reader(csvfile)
@@ -13,12 +13,12 @@ with open("tvt.csv") as csvfile:
     enemy_marines = int(row[1])
     score = int(row[2])
      
-    xs.append((predictor_marines, enemy_marines))
-    ys.append(1 if score > 0 else 0)
+    inputs.append((predictor_marines, enemy_marines))
+    labels.append(1 if score > 0 else 0)
  
 logreg = LogisticRegression()
  
-train, test, train_labels, test_labels = train_test_split(xs, ys)
+train, test, train_labels, test_labels = train_test_split(inputs, labels)
  
 logreg.fit(train, train_labels)
  
