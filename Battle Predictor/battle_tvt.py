@@ -56,7 +56,7 @@ class PredictorAgent(TerranAgent):
 
     if obs.last():
       print(self.bm.predictor_marines, self.bm.enemy_marines, obs.reward)
-      with open('tvt.csv', 'a', newline='\n') as myfile:
+      with open("tvt.csv", "a", newline="\n") as myfile:
         csvwriter = csv.writer(myfile)
         csvwriter.writerow([self.bm.predictor_marines,
                             self.bm.enemy_marines,
