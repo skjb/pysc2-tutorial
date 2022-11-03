@@ -52,7 +52,7 @@ class ZergAgent(base_agent.BaseAgent):
       if self.can_do(obs, actions.FUNCTIONS.Train_Zergling_quick.id):
         return actions.FUNCTIONS.Train_Zergling_quick("now")
     
-    larvae = self.get_units_by_type(oba, units.Zerg.Larva)
+    larvae = self.get_units_by_type(obs, units.Zerg.Larva)
     if len(larvae) > 0:
       larva = random.choice(larvae)
       
