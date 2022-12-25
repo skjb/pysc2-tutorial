@@ -111,14 +111,15 @@ class SmartAgent(base_agent.BaseAgent):
             return [x - x_distance, y - y_distance]
         
         return [x + x_distance, y + y_distance]
-        
+ 
     def step(self, obs):
+
         super(SmartAgent, self).step(obs)
         
-        player_y, player_x = (obs.observation['minimap'][_PLAYER_RELATIVE] == _PLAYER_SELF).nonzero()
+        player_y, player_x = (obs.observation.feature_minimap.player_relative == features.PlayerRelative.SELF).nonzero()
         self.base_top_left = 1 if player_y.any() and player_y.mean() <= 31 else 0
         
-        unit_type = obs.observation['screen'][_UNIT_TYPE]
+        unit_type = obs.observation['feature_screen'][_UNIT_TYPE]
 
         depot_y, depot_x = (unit_type == _TERRAN_SUPPLY_DEPOT).nonzero()
         supply_depot_count = supply_depot_count = 1 if depot_y.any() else 0
@@ -162,7 +163,7 @@ class SmartAgent(base_agent.BaseAgent):
             return actions.FunctionCall(_NO_OP, [])
 
         elif smart_action == ACTION_SELECT_SCV:
-            unit_type = obs.observation['screen'][_UNIT_TYPE]
+            unit_type = obs.observation['feature_screen'][_UNIT_TYPE]
             unit_y, unit_x = (unit_type == _TERRAN_SCV).nonzero()
                 
             if unit_y.any():
@@ -173,7 +174,7 @@ class SmartAgent(base_agent.BaseAgent):
         
         elif smart_action == ACTION_BUILD_SUPPLY_DEPOT:
             if _BUILD_SUPPLY_DEPOT in obs.observation['available_actions']:
-                unit_type = obs.observation['screen'][_UNIT_TYPE]
+                unit_type = obs.observation['feature_screen'][_UNIT_TYPE]
                 unit_y, unit_x = (unit_type == _TERRAN_COMMANDCENTER).nonzero()
                 
                 if unit_y.any():
@@ -183,7 +184,7 @@ class SmartAgent(base_agent.BaseAgent):
         
         elif smart_action == ACTION_BUILD_BARRACKS:
             if _BUILD_BARRACKS in obs.observation['available_actions']:
-                unit_type = obs.observation['screen'][_UNIT_TYPE]
+                unit_type = obs.observation['feature_screen'][_UNIT_TYPE]
                 unit_y, unit_x = (unit_type == _TERRAN_COMMANDCENTER).nonzero()
                 
                 if unit_y.any():
@@ -192,7 +193,7 @@ class SmartAgent(base_agent.BaseAgent):
                     return actions.FunctionCall(_BUILD_BARRACKS, [_NOT_QUEUED, target])
     
         elif smart_action == ACTION_SELECT_BARRACKS:
-            unit_type = obs.observation['screen'][_UNIT_TYPE]
+            unit_type = obs.observation['feature_screen'][_UNIT_TYPE]
             unit_y, unit_x = (unit_type == _TERRAN_BARRACKS).nonzero()
                 
             if unit_y.any():
