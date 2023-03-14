@@ -40,12 +40,12 @@ class SimpleAgent(base_agent.BaseAgent):
         time.sleep(0.5)
         
         if self.base_top_left is None:
-            player_y, player_x = (obs.observation["minimap"][_PLAYER_RELATIVE] == _PLAYER_SELF).nonzero()
+            player_y, player_x = (obs.observation["feature_minimap"][_PLAYER_RELATIVE] == _PLAYER_SELF).nonzero()
             self.base_top_left = player_y.mean() <= 31
             
         if not self.supply_depot_built:
             if not self.scv_selected:
-                unit_type = obs.observation["screen"][_UNIT_TYPE]
+                unit_type = obs.observation["feature_screen"][_UNIT_TYPE]
                 unit_y, unit_x = (unit_type == _TERRAN_SCV).nonzero()
                 
                 target = [unit_x[0], unit_y[0]]
@@ -54,7 +54,7 @@ class SimpleAgent(base_agent.BaseAgent):
                 
                 return actions.FunctionCall(_SELECT_POINT, [_NOT_QUEUED, target])
             elif _BUILD_SUPPLYDEPOT in obs.observation["available_actions"]:
-                unit_type = obs.observation["screen"][_UNIT_TYPE]
+                unit_type = obs.observation["feature_screen"][_UNIT_TYPE]
                 unit_y, unit_x = (unit_type == _TERRAN_COMMANDCENTER).nonzero()
                 
                 target = self.transformLocation(int(unit_x.mean()), 0, int(unit_y.mean()), 20)
